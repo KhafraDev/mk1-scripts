@@ -17,7 +17,6 @@ if(!isRunning && curr > 0) {
 }
 
 if(isRunning) {
-    timeout = null; // since clearTimeout is not implemented
     if(curr === 1) {
         flashlight.setLevel(0);
     } else {
