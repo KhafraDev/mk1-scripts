@@ -4,11 +4,9 @@
  *  1. If 2 presses within 500ms are detected and the code was not running, turn on flashlight.
  *  2. Otherwise, add 1 to the flashlight level, or if it's max, set to 0.
  * After 10 seconds, revert to default functionality, until the 2 presses are detected.
- * 
- * Will be updated when get/set volume is added. 
  */
 
-var curr = flashlight.currentLevel();
+var curr = flashlight.getLevel();
 var VOLUP_PRESSES = typeof VOLUP_PRESSES === 'undefined' ? 0 : VOLUP_PRESSES;
 
 // reset presses after 500ms
@@ -25,7 +23,9 @@ if(isRunning) {
     } else {
         flashlight.setLevel(curr + .25);
     }
+    volume.setMedia(volume.getMedia() - (6.25 / 100));
 } else if(!isRunning && ++VOLUP_PRESSES >= 2) {
     isRunning = true;
     flashlight.setLevel(.25);
+    volume.setMedia(volume.getMedia() - (VOLUP_PRESSES * 6.25 / 100));
 }
