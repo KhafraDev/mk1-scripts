@@ -2,6 +2,10 @@ var webhookURL = typeof webhookURL === 'undefined'
     ? undefined // REPLACE WITH WEBHOOK URL! 
     : webhookURL;
 
+var user = typeof user === 'undefined'
+    ? undefined // REPLACE WITH DISCORD TAG, IE: "Khafra#0001"
+    : user;
+
 var fetch = typeof fetch !== 'undefined' ? fetch : function(url, o={}, cb) {
     let c = ['curl'];
     
@@ -23,7 +27,7 @@ var fetch = typeof fetch !== 'undefined' ? fetch : function(url, o={}, cb) {
     return shellrun(c.join(' '), (err, stdout) => cb(err, stdout));
 }
 
-var embed = typeof embed !== 'undefined' ? embed : [{
+var embed = [{
     title: NOTIFICATION_TITLE,
     description: NOTIFICATION_MESSAGE,
     color: 2550200,
@@ -41,7 +45,7 @@ if(webhookURL) {
             'Content-Type': 'application/json' 
         },
         opts: [
-            '-d \'' + JSON.stringify({ embeds: embed }) + '\''
+            '-d \'' + JSON.stringify({ content: `${user ? '@' + user : ''}`, embeds: embed }) + '\''
         ]
     }, () => {});
 }
